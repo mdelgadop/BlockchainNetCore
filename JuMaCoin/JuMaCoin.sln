@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JuMaCoin.Tests", "JuMaCoin.Tests\JuMaCoin.Tests.csproj", "{5D2F9D18-0420-4667-8A9D-2038AA8D6094}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JumaCoin.Console", "JumaCoin.Console\JumaCoin.Console.csproj", "{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JumaCoin.Business", "JumaCoin.Business\JumaCoin.Business.csproj", "{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|x64.Build.0 = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Debug|x86.Build.0 = Debug|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|x64.ActiveCfg = Release|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|x64.Build.0 = Release|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|x86.ActiveCfg = Release|Any CPU
+		{5D2F9D18-0420-4667-8A9D-2038AA8D6094}.Release|x86.Build.0 = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|x64.Build.0 = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|x64.ActiveCfg = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|x64.Build.0 = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B9B152C-AA2E-4E44-8FEA-EC0AC03FE105}.Release|x86.Build.0 = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|x64.Build.0 = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Debug|x86.Build.0 = Debug|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|x64.ActiveCfg = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|x64.Build.0 = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|x86.ActiveCfg = Release|Any CPU
+		{216E862F-8E6E-48A7-AC3F-A9FB6C44C701}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
