@@ -19,6 +19,11 @@ namespace JumaCoin.Business.classes
 
         public Transaction[] Data { get; set; }
 
+        public Block() : this(0, DateTime.Now, new List<Transaction>(), string.Empty)
+        {
+
+        }
+
         public Block(int index, DateTime timestamp, IList<Transaction> transactions, string previousHash)
         {
             Id = index;

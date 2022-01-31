@@ -14,6 +14,8 @@ namespace JumaCoin.Business.classes.Sockets
         public string Host { get {return ipAddress == null ? host : ipAddress.ToString();} }
         private INode observer;
 
+        public AsyncService() : this("127.0.0.1", (new System.Random()).Next(10000, 15000), null) {}
+
         public AsyncService(string host, int port, INode observer)
         {
             this.Port = port;
@@ -80,7 +82,7 @@ namespace JumaCoin.Business.classes.Sockets
         
         private string Response(string request)
         {
-            return observer.ReceiveMessageFromClient(request);
+            return observer != null ? observer.ReceiveMessageFromClient(request) : string.Empty;
         }
         
     }

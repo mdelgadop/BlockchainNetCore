@@ -12,6 +12,8 @@ namespace JumaCoin.Business.classes.Sockets
         private string host;
         private INode observer;
 
+        public AsyncClient() : this("127.0.0.1", (new System.Random()).Next(10000, 15000), null) {}
+
         public AsyncClient(string host, int port, INode observer)
         {
             this.Port = port;
@@ -26,7 +28,8 @@ namespace JumaCoin.Business.classes.Sockets
                 Task<string> tsResponse = SendRequest(server, port, data);
                 //System.Console.WriteLine("Sent request, waiting for response");
                 await tsResponse;
-                observer.ReceiveMessageFromServer(tsResponse.Result);
+                if(observer != null)
+                    observer.ReceiveMessageFromServer(tsResponse.Result);
             }
             catch (Exception ex) {
                 System.Console.WriteLine("ERROR: " + ex.Message);

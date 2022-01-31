@@ -22,6 +22,11 @@ namespace JumaCoin.Business.classes
 
         private byte[] Signature { get; set; }
 
+        public Transaction() : this(string.Empty, string.Empty, 0)
+        {
+
+        }
+
         public Transaction(string sender, string receiver, decimal amount)
         {
             Sender = sender;

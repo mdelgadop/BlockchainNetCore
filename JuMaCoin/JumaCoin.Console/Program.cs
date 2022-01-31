@@ -3,7 +3,10 @@ using System.Security.Cryptography;
 using System.Text;
 using JumaCoin.Business.classes;
 using JumaCoin.Business.classes.Helpers;
-using JumaCoin.Business.classes.Helpers.SerializeHelpers;
+
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 /*
 --SOLUCIÓN
@@ -29,26 +32,11 @@ namespace JumaCoin.Console
             //dotnet run --project ./JumaCoin.Console/JumaCoin.Console.csproj
             //dotnet run --project "C:/Users/Mario Delgado/Desktop/MyDocumentation/Software/JuMaCoin/JumaCoin.Console/JumaCoin.Console.csproj"
             
-
-            /*string a = "{asdfg},{qwerty},{pepepepe},{caca}";
-            string[] array = a.Split(",");
-            foreach(string v in array)
-            {
-                System.Console.WriteLine(v);
-            }*/
-
-            //string tagini = "<amount>";
-            //string tagfin = "</amount>";
-
-            //string amount = a.Substring(a.IndexOf(tagini) + tagini.Length, a.IndexOf(tagfin, a.IndexOf(tagini)) - (a.IndexOf(tagini) + tagini.Length));
-            
-
-
             Blockchain nodo1 = new Blockchain("127.0.0.1", 10001, 15001);
-            /*Blockchain nodo2 = new Blockchain("127.0.0.1", 10002, 15002);
+            Blockchain nodo2 = new Blockchain("127.0.0.1", 10002, 15002);
 
             nodo1.RegisterNode(nodo2.Host, nodo2.PortServer);
-            nodo2.RegisterNode(nodo1.Host, nodo1.PortServer);*/
+            nodo2.RegisterNode(nodo1.Host, nodo1.PortServer);
             
             nodo1.NewTransaction("Mario", "Laura", 5);
             nodo1.NewTransaction("Laura", "Mario", 3);
@@ -58,20 +46,28 @@ namespace JumaCoin.Console
             nodo1.NewTransaction("Laura", "Mario", 1);
             nodo1.NewBlock();
 
-            //System.Console.WriteLine(nodo1.ToString());
+            nodo2.PerformConsensus();
 
-            //Blockchain caca = System.Text.Json.JsonSerializer.Deserialize<Blockchain>(nodo1.ToString());
+            System.Threading.Thread.Sleep(5000);
+            System.Console.WriteLine(nodo2.Blocks.Count);
+            System.Console.WriteLine(nodo2.Blocks[0].Data.Length);
+            System.Console.WriteLine(nodo2.Blocks[1].Data.Length);
             
-            System.Console.WriteLine("---------------------------------------------------------");
-            string base64Result = System.Text.Json.JsonSerializer.Serialize<Blockchain>(nodo1);
-            System.Console.WriteLine(base64Result);
-            System.Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            Blockchain b2 = (new BlockchainSerializeHelper()).Deserialize(base64Result);
+            System.Console.WriteLine(nodo2.Blocks[0].Data[0].Amount);
+            System.Console.WriteLine(nodo2.Blocks[0].Data[0].Receiver);
+            System.Console.WriteLine(nodo2.Blocks[0].Data[0].Sender);
 
-            System.Console.WriteLine("---------------------------------------------------------");
-            //string b2str = System.Text.Json.JsonSerializer.Serialize<Blockchain>(b2);
-            System.Console.WriteLine(b2.Blocks.Count);
-            //System.Console.WriteLine("---------------------------------------------------------");
+            System.Console.WriteLine(nodo2.Blocks[0].Data[1].Amount);
+            System.Console.WriteLine(nodo2.Blocks[0].Data[1].Receiver);
+            System.Console.WriteLine(nodo2.Blocks[0].Data[1].Sender);
+
+            System.Console.WriteLine(nodo2.Blocks[1].Data[0].Amount);
+            System.Console.WriteLine(nodo2.Blocks[1].Data[0].Receiver);
+            System.Console.WriteLine(nodo2.Blocks[1].Data[0].Sender);
+
+            System.Console.WriteLine(nodo2.Blocks[1].Data[1].Amount);
+            System.Console.WriteLine(nodo2.Blocks[1].Data[1].Receiver);
+            System.Console.WriteLine(nodo2.Blocks[1].Data[1].Sender);
         }
 
     }

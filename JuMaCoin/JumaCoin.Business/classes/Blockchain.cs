@@ -6,9 +6,9 @@ namespace JumaCoin.Business.classes
 {
     public class Blockchain : Node
     {
-        public IList<Block> Blocks { get; set; }
+        public List<Block> Blocks { get; set; }
 
-        public IList<Transaction> CurrentTransactions { get; set; }
+        public List<Transaction> CurrentTransactions { get; set; }
 
         private const int Difficulty  = 4; //se exigen 4 ceros al inicio del hash para validad la prueba de trabajo
 
@@ -114,9 +114,9 @@ namespace JumaCoin.Business.classes
 
         private Blockchain FromString(string blockchainJson)
         {
-            System.Console.WriteLine("RECIBIDO: " + blockchainJson);
+            //System.Console.WriteLine("RECIBIDO: " + blockchainJson);
             Blockchain blockchain = System.Text.Json.JsonSerializer.Deserialize<Blockchain>(blockchainJson);
-            System.Console.WriteLine("DESERIALIZADO: " + blockchain.ToString());
+            //System.Console.WriteLine("DESERIALIZADO: " + blockchain.ToString());
             return blockchain;
         }   
     }

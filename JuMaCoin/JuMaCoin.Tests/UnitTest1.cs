@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using JumaCoin.Business.classes;
 using System.Collections.Generic;
 using System.Linq;
-using JumaCoin.Business.classes.Helpers.SerializeHelpers;
+using JumaCoin.Business.classes.Helpers;
 
 namespace JuMaCoin.Tests
 {
@@ -85,61 +85,7 @@ namespace JuMaCoin.Tests
         }
     
         [TestMethod]
-        public void TestSerializationTransaction()
-        {
-            #region Create node for testing
-            Blockchain nodo1 = new Blockchain("127.0.0.1", 10001, 15001);
-
-            nodo1.NewTransaction("Mario", "Laura", 5);
-            nodo1.NewTransaction("Laura", "Mario", 3);
-            nodo1.NewBlock();
-
-            #endregion Create node for testing
-
-            Transaction transactionOriginal = nodo1.Blocks[0].Data[0];
-
-            TransactionSerializeHelper transactionSerializer = new TransactionSerializeHelper();
-            string transactionOriginalStr = transactionSerializer.Serialize(transactionOriginal);
-            Assert.IsFalse(string.IsNullOrEmpty(transactionOriginalStr));
-
-            Transaction transactionCopy = transactionSerializer.Deserialize(transactionOriginalStr);
-            Assert.IsNotNull(transactionCopy);
-
-            string transactionCopyStr = transactionSerializer.Serialize(transactionCopy);
-            Assert.IsFalse(string.IsNullOrEmpty(transactionCopyStr));
-            
-            Assert.IsTrue(transactionCopyStr.CompareTo(transactionOriginalStr) == 0);
-        }
-
-        [TestMethod]
-        public void TestSerializationBlock()
-        {
-            #region Create node for testing
-            Blockchain nodo1 = new Blockchain("127.0.0.1", 10002, 15002);
-
-            nodo1.NewTransaction("Mario", "Laura", 5);
-            nodo1.NewTransaction("Laura", "Mario", 3);
-            nodo1.NewBlock();
-
-            #endregion Create node for testing
-
-            Block blockOriginal = nodo1.Blocks[0];
-
-            BlockSerializeHelper blockSerializer = new BlockSerializeHelper();
-            string blockOriginalStr = blockSerializer.Serialize(blockOriginal);
-            Assert.IsFalse(string.IsNullOrEmpty(blockOriginalStr));
-
-            Block blockCopy = blockSerializer.Deserialize(blockOriginalStr);
-            Assert.IsNotNull(blockCopy);
-
-            string blockCopyStr = blockSerializer.Serialize(blockCopy);
-            Assert.IsFalse(string.IsNullOrEmpty(blockCopyStr));
-            
-            Assert.IsTrue(blockCopyStr.CompareTo(blockOriginalStr) == 0);
-        }
-
-        [TestMethod]
-        public void TestSerializationBlockchain()
+        public void TestSerialization()
         {
             #region Create node for testing
             Blockchain nodo1 = new Blockchain("127.0.0.1", 10003, 15003);
@@ -153,21 +99,71 @@ namespace JuMaCoin.Tests
             nodo1.NewBlock();
             #endregion Create node for testing
 
-            BlockchainSerializeHelper blockchainSerializer = new BlockchainSerializeHelper();
-            string blockOriginalStr = blockchainSerializer.Serialize(nodo1);
-            Assert.IsFalse(string.IsNullOrEmpty(blockOriginalStr));
+            SerializeHelper<Blockchain> serializer = new SerializeHelper<Blockchain>();
 
-            Blockchain nodo1Copy = blockchainSerializer.Deserialize(blockOriginalStr);
-            Assert.IsNotNull(nodo1Copy);
+            string nodo1Str = serializer.Serialize(nodo1);
 
-            //Number of blocks are the same
+            Blockchain nodo1Copy = serializer.Deserialize(nodo1Str);
+
+            Assert.AreEqual(nodo1.Host, nodo1Copy.Host);
+            Assert.AreEqual(nodo1.PortClient, nodo1Copy.PortClient);
+            Assert.AreEqual(nodo1.PortServer, nodo1Copy.PortServer);
             Assert.AreEqual(nodo1.Blocks.Count, nodo1Copy.Blocks.Count);
+            Assert.AreEqual(nodo1.Blocks[0].Hash, nodo1Copy.Blocks[0].Hash);
+            Assert.AreEqual(nodo1.Blocks[0].Proof, nodo1Copy.Blocks[0].Proof);
+            Assert.AreEqual(nodo1.Blocks[0].PreviousHash, nodo1Copy.Blocks[0].PreviousHash);
+            Assert.AreEqual(nodo1.Blocks[0].Data.Length, nodo1Copy.Blocks[0].Data.Length);
+            Assert.AreEqual(nodo1.Blocks[0].Data[0].Hash, nodo1Copy.Blocks[0].Data[0].Hash);
+            Assert.AreEqual(nodo1.Blocks[0].Data[0].Amount, nodo1Copy.Blocks[0].Data[0].Amount);
+            Assert.AreEqual(nodo1.Blocks[0].Data[0].Sender, nodo1Copy.Blocks[0].Data[0].Sender);
+            Assert.AreEqual(nodo1.Blocks[0].Data[0].Receiver, nodo1Copy.Blocks[0].Data[0].Receiver);
 
-            //Blocks are the same
-            BlockSerializeHelper blockSerializer = new BlockSerializeHelper();
-            Assert.AreEqual(blockSerializer.Serialize(nodo1.Blocks[0]), blockSerializer.Serialize(nodo1Copy.Blocks[0]));
-            Assert.AreEqual(blockSerializer.Serialize(nodo1.Blocks[1]), blockSerializer.Serialize(nodo1Copy.Blocks[1]));
         }
 
+            
+        [TestMethod]
+        public void TestPerformConsensus()
+        {
+            #region Create node for testing
+            Blockchain nodo1 = new Blockchain("127.0.0.1", 10001, 15001);
+            Blockchain nodo2 = new Blockchain("127.0.0.1", 10002, 15002);
+
+            nodo1.RegisterNode(nodo2.Host, nodo2.PortServer);
+            nodo2.RegisterNode(nodo1.Host, nodo1.PortServer);
+            
+            nodo1.NewTransaction("Mario", "Laura", 5);
+            nodo1.NewTransaction("Laura", "Mario", 3);
+            nodo1.NewBlock();
+
+            nodo1.NewTransaction("Mario", "Laura", 2);
+            nodo1.NewTransaction("Laura", "Mario", 1);
+            nodo1.NewBlock();
+            #endregion Create node for testing
+
+            nodo2.PerformConsensus();
+
+            System.Threading.Thread.Sleep(5000);
+
+            Assert.AreEqual(nodo2.Blocks.Count, 2);
+            Assert.AreEqual(nodo2.Blocks[0].Data.Length, 2);
+            Assert.AreEqual(nodo2.Blocks[1].Data.Length, 2);
+            
+            Assert.AreEqual(nodo2.Blocks[0].Data[0].Amount, nodo1.Blocks[0].Data[0].Amount);
+            Assert.AreEqual(nodo2.Blocks[0].Data[0].Receiver, nodo1.Blocks[0].Data[0].Receiver);
+            Assert.AreEqual(nodo2.Blocks[0].Data[0].Sender, nodo1.Blocks[0].Data[0].Sender);
+
+            Assert.AreEqual(nodo2.Blocks[0].Data[1].Amount, nodo1.Blocks[0].Data[1].Amount);
+            Assert.AreEqual(nodo2.Blocks[0].Data[1].Receiver, nodo1.Blocks[0].Data[1].Receiver);
+            Assert.AreEqual(nodo2.Blocks[0].Data[1].Sender, nodo1.Blocks[0].Data[1].Sender);
+
+            Assert.AreEqual(nodo2.Blocks[1].Data[0].Amount, nodo1.Blocks[1].Data[0].Amount);
+            Assert.AreEqual(nodo2.Blocks[1].Data[0].Receiver, nodo1.Blocks[1].Data[0].Receiver);
+            Assert.AreEqual(nodo2.Blocks[1].Data[0].Sender, nodo1.Blocks[1].Data[0].Sender);
+
+            Assert.AreEqual(nodo2.Blocks[1].Data[1].Amount, nodo1.Blocks[1].Data[1].Amount);
+            Assert.AreEqual(nodo2.Blocks[1].Data[1].Receiver, nodo1.Blocks[1].Data[1].Receiver);
+            Assert.AreEqual(nodo2.Blocks[1].Data[1].Sender, nodo1.Blocks[1].Data[1].Sender);
+
+        }
     }
 }

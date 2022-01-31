@@ -30,7 +30,7 @@ namespace JumaCoin.Business.classes.Sockets
 
         public AsyncService Server { get; set; }
 
-        public IList<NodeServer> NodesServer { get; set; }
+        public List<NodeServer> NodesServer { get; set; }
 
         public Node() : this("127.0.0.1", (new System.Random()).Next(10000, 15000), (new System.Random()).Next(15000, 20000))
         {
